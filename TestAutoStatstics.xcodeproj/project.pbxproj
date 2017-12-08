@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1B049BC31FDA59F90075FD51 /* LPMAutoStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B049BC21FDA59F90075FD51 /* LPMAutoStatistics.m */; };
+		1B049BC61FDA5FCE0075FD51 /* LPMEditStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B049BC51FDA5FCE0075FD51 /* LPMEditStatsView.m */; };
+		1B049BC81FDA5FDF0075FD51 /* LPMEditStatsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1B049BC71FDA5FDF0075FD51 /* LPMEditStatsView.xib */; };
+		1B049BCB1FDA62E20075FD51 /* LPMEditStatsAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B049BCA1FDA62E20075FD51 /* LPMEditStatsAlert.m */; };
 		1B765F9B1FD8DE07002EAA6C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B765F9A1FD8DE07002EAA6C /* AppDelegate.m */; };
 		1B765F9E1FD8DE07002EAA6C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B765F9D1FD8DE07002EAA6C /* ViewController.m */; };
 		1B765FA11FD8DE07002EAA6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B765F9F1FD8DE07002EAA6C /* Main.storyboard */; };
@@ -23,6 +26,11 @@
 		05E8CF64B3F8495859EBE06C /* Pods-TestAutoStatstics.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestAutoStatstics.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestAutoStatstics/Pods-TestAutoStatstics.debug.xcconfig"; sourceTree = "<group>"; };
 		1B049BC11FDA59F90075FD51 /* LPMAutoStatistics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LPMAutoStatistics.h; sourceTree = SOURCE_ROOT; };
 		1B049BC21FDA59F90075FD51 /* LPMAutoStatistics.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LPMAutoStatistics.m; sourceTree = SOURCE_ROOT; };
+		1B049BC41FDA5FCE0075FD51 /* LPMEditStatsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LPMEditStatsView.h; sourceTree = "<group>"; };
+		1B049BC51FDA5FCE0075FD51 /* LPMEditStatsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LPMEditStatsView.m; sourceTree = "<group>"; };
+		1B049BC71FDA5FDF0075FD51 /* LPMEditStatsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LPMEditStatsView.xib; sourceTree = "<group>"; };
+		1B049BC91FDA62E20075FD51 /* LPMEditStatsAlert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LPMEditStatsAlert.h; sourceTree = "<group>"; };
+		1B049BCA1FDA62E20075FD51 /* LPMEditStatsAlert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LPMEditStatsAlert.m; sourceTree = "<group>"; };
 		1B765F961FD8DE07002EAA6C /* TestAutoStatstics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAutoStatstics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1B765F991FD8DE07002EAA6C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1B765F9A1FD8DE07002EAA6C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +96,11 @@
 				1B765F9D1FD8DE07002EAA6C /* ViewController.m */,
 				1B765FB21FD99200002EAA6C /* TestViewController.h */,
 				1B765FB31FD99200002EAA6C /* TestViewController.m */,
+				1B049BC91FDA62E20075FD51 /* LPMEditStatsAlert.h */,
+				1B049BCA1FDA62E20075FD51 /* LPMEditStatsAlert.m */,
+				1B049BC41FDA5FCE0075FD51 /* LPMEditStatsView.h */,
+				1B049BC51FDA5FCE0075FD51 /* LPMEditStatsView.m */,
+				1B049BC71FDA5FDF0075FD51 /* LPMEditStatsView.xib */,
 				1B765F9F1FD8DE07002EAA6C /* Main.storyboard */,
 				1B765FA21FD8DE07002EAA6C /* Assets.xcassets */,
 				1B765FA41FD8DE07002EAA6C /* LaunchScreen.storyboard */,
@@ -171,6 +184,7 @@
 			files = (
 				1B765FA61FD8DE07002EAA6C /* LaunchScreen.storyboard in Resources */,
 				1B765FB61FD99DB7002EAA6C /* lpm_auto_stats_config.plist in Resources */,
+				1B049BC81FDA5FDF0075FD51 /* LPMEditStatsView.xib in Resources */,
 				1B765FA31FD8DE07002EAA6C /* Assets.xcassets in Resources */,
 				1B765FA11FD8DE07002EAA6C /* Main.storyboard in Resources */,
 			);
@@ -233,8 +247,10 @@
 			files = (
 				1B765F9E1FD8DE07002EAA6C /* ViewController.m in Sources */,
 				1B765FA91FD8DE07002EAA6C /* main.m in Sources */,
+				1B049BC61FDA5FCE0075FD51 /* LPMEditStatsView.m in Sources */,
 				1B765F9B1FD8DE07002EAA6C /* AppDelegate.m in Sources */,
 				1B765FB41FD99200002EAA6C /* TestViewController.m in Sources */,
+				1B049BCB1FDA62E20075FD51 /* LPMEditStatsAlert.m in Sources */,
 				1B049BC31FDA59F90075FD51 /* LPMAutoStatistics.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

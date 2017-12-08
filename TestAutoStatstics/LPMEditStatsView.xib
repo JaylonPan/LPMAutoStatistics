@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LPMEditStatsView">
+            <rect key="frame" x="0.0" y="0.0" width="250" height="160"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="qIZ-3X-CoJ">
+                    <rect key="frame" x="5" y="30" width="240" height="90"/>
+                    <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="90" id="9rK-W7-Dad"/>
+                        <constraint firstAttribute="width" constant="240" id="QIp-4z-F3l"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gG-Oi-4JS">
+                    <rect key="frame" x="25" y="130" width="48" height="30"/>
+                    <state key="normal" title="Cancel"/>
+                    <connections>
+                        <action selector="cancelAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="hme-Oy-oIR"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQl-t8-iqM">
+                    <rect key="frame" x="195" y="130" width="30" height="30"/>
+                    <state key="normal" title="OK"/>
+                    <connections>
+                        <action selector="okAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="cZV-eu-zzk"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="编辑打点信息" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KEm-nT-Rhb">
+                    <rect key="frame" x="79" y="5" width="92" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="6gG-Oi-4JS" firstAttribute="top" secondItem="qIZ-3X-CoJ" secondAttribute="bottom" constant="10" id="70m-27-QHi"/>
+                <constraint firstItem="IQl-t8-iqM" firstAttribute="top" secondItem="qIZ-3X-CoJ" secondAttribute="bottom" constant="10" id="8fr-dK-c5b"/>
+                <constraint firstItem="qIZ-3X-CoJ" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="30" id="PMf-dc-HZB"/>
+                <constraint firstItem="KEm-nT-Rhb" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="5" id="Vtd-3v-hMV"/>
+                <constraint firstItem="KEm-nT-Rhb" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="bjk-eY-l9I"/>
+                <constraint firstItem="qIZ-3X-CoJ" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oSN-1Z-8Nd"/>
+                <constraint firstItem="IQl-t8-iqM" firstAttribute="trailing" secondItem="qIZ-3X-CoJ" secondAttribute="trailing" constant="-20" id="pJr-4L-akd"/>
+                <constraint firstItem="6gG-Oi-4JS" firstAttribute="leading" secondItem="qIZ-3X-CoJ" secondAttribute="leading" constant="20" id="u5L-OV-Hpr"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="textView" destination="qIZ-3X-CoJ" id="tjR-IN-8C7"/>
+            </connections>
+            <point key="canvasLocation" x="-20" y="-244"/>
+        </view>
+    </objects>
+</document>

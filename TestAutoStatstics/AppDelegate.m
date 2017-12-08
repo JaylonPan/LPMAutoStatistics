@@ -20,7 +20,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [LPMAutoStatistics setupWithBlock:^(id<NSCoding> stats) {
-        NSLog(@"%@",stats);
+        NSLog(@"%@",stats);//此处直接调用 您自己的打点函数  比如 [LPMLog uploadLog:stats]
     }];
     // Override point for customization after application launch.
     return YES;

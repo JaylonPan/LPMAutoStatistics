@@ -20,6 +20,8 @@ static LPMAutoStatsRecordBlock g_recordBlock;
 static BOOL g_isRecording;
 
 @implementation LPMAutoStatistics
+
+#pragma mark - setup
 + (void)setupWithBlock:(LPMAutoStatsBlock)block {
     g_uploadLogBlock = [block copy];
     [self setupConfigFile];
@@ -71,9 +73,6 @@ static BOOL g_isRecording;
     }];
 }
 
-+ (BOOL)hasConfigFile {
-    return [[NSFileManager defaultManager] fileExistsAtPath:[self configFilePath]];
-}
 
 + (void)setupStatsList {
     [self getConfigDict:^(NSMutableDictionary *config) {
@@ -98,6 +97,7 @@ static BOOL g_isRecording;
     }];
 }
 
+#pragma mark - destroy
 + (void)destroyStatsList {
     [self getConfigDict:^(NSMutableDictionary *config) {
         for (NSString *key in config.allKeys) {
@@ -129,53 +129,22 @@ static BOOL g_isRecording;
     }];
 }
 
+#pragma mark - getter
++ (BOOL)hasConfigFile {
+    return [[NSFileManager defaultManager] fileExistsAtPath:[self configFilePath]];
+}
+
 + (NSDictionary<NSString *, id<NSCoding> > *)configDictionary {
-#if DEBUG
     __block NSDictionary *dic = nil;
     [self getConfigDict:^(NSMutableDictionary *config) {
         dic = [config copy];
     }];
     return dic;
-#else
-    return nil;
-#endif
 }
 
-+ (NSArray<NSString *> *)analysisConfigKey:(NSString *)key {
-    return [key componentsSeparatedByString:@"^"];
-}
-+ (NSString *)configKeyWithClass:(Class)clazz selector:(SEL)selector {
-    return [NSString stringWithFormat:@"%@^%@",NSStringFromClass(clazz), NSStringFromSelector(selector)];
-}
-
-+ (void)getConfigDict:(void(^)(NSMutableDictionary *config))block {
-    static NSMutableDictionary *theConfig = nil;
-    static dispatch_queue_t getConfigDictQueue = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        getConfigDictQueue = dispatch_queue_create("getConfigDictQueue", DISPATCH_QUEUE_SERIAL);
-        theConfig = [NSMutableDictionary dictionary];
-    });
-    dispatch_barrier_sync(getConfigDictQueue, ^{
-        block(theConfig);
-    });
-}
-
-+ (void)classesPreparedForRecording:(void(^)(NSMutableArray *preparedClasses))block {
-    static NSMutableArray *preparedClasses = nil;
-    static dispatch_queue_t preparedClassesQueue = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        preparedClassesQueue = dispatch_queue_create("preparedClassesQueue", DISPATCH_QUEUE_SERIAL);
-        preparedClasses = [NSMutableArray array];
-    });
-    dispatch_barrier_sync(preparedClassesQueue, ^{
-        block(preparedClasses);
-    });
-}
+#pragma mark - record
 
 + (void)configStats:(id<NSCoding>)stats forKey:(NSString *)key {
-#if DEBUG
     if (!key ||!stats) {
         return;
     }
@@ -193,11 +162,9 @@ static BOOL g_isRecording;
         [config writeToFile:[self configFilePath] atomically:YES];
     }];
     
-#endif
 }
 
 + (void)prepareClassForRecord:(Class)clazz rootClass:(Class)rootClazz {
-#if DEBUG
     if (!g_isRecording) {
         return;
     }
@@ -206,7 +173,9 @@ static BOOL g_isRecording;
         return;
     }
     if (![clazz isSubclassOfClass:rootClazz] && ![clazz isEqual:rootClazz]) {
+#if DEBUG
         [NSException raise:@"clazz not rootClass's subclass " format:@"The clazz should be subclass of rootClazz!"];
+#endif
         return;
     }
 
@@ -255,20 +224,16 @@ static BOOL g_isRecording;
             break;
         }
     } while ((clazz = [clazz superclass]));
-#endif
 }
 
 + (void)startRecordWithBlock:(LPMAutoStatsRecordBlock)block {
-#if DEBUG
     [self destroyStatsList];
     g_recordBlock = [block copy];
     g_isRecording = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:kLPMAutoStatsWillStartRecordingNotifyName object:nil];
-#endif
 }
 
 + (void)endRecord {
-#if DEBUG
     g_recordBlock = nil;
     g_isRecording = NO;
     [self classesPreparedForRecording:^(NSMutableArray *preparedClasses) {
@@ -278,15 +243,48 @@ static BOOL g_isRecording;
         [preparedClasses removeAllObjects];
     }];
     [self setupStatsList];
-#endif
 }
 
 + (BOOL)isRecording {
-#if DEBUG
     return g_isRecording;
-#else
-    return NO;
-#endif
+}
+
+#pragma mark - thread safed mutable set
+
++ (void)getConfigDict:(void(^)(NSMutableDictionary *config))block {
+    static NSMutableDictionary *theConfig = nil;
+    static dispatch_queue_t getConfigDictQueue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        getConfigDictQueue = dispatch_queue_create("getConfigDictQueue", DISPATCH_QUEUE_SERIAL);
+        theConfig = [NSMutableDictionary dictionary];
+    });
+    dispatch_barrier_sync(getConfigDictQueue, ^{
+        block(theConfig);
+    });
+}
+
++ (void)classesPreparedForRecording:(void(^)(NSMutableArray *preparedClasses))block {
+    static NSMutableArray *preparedClasses = nil;
+    static dispatch_queue_t preparedClassesQueue = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        preparedClassesQueue = dispatch_queue_create("preparedClassesQueue", DISPATCH_QUEUE_SERIAL);
+        preparedClasses = [NSMutableArray array];
+    });
+    dispatch_barrier_sync(preparedClassesQueue, ^{
+        block(preparedClasses);
+    });
+}
+
+#pragma mark - utils
+
++ (NSArray<NSString *> *)analysisConfigKey:(NSString *)key {
+    return [key componentsSeparatedByString:@"^"];
+}
+
++ (NSString *)configKeyWithClass:(Class)clazz selector:(SEL)selector {
+    return [NSString stringWithFormat:@"%@^%@",NSStringFromClass(clazz), NSStringFromSelector(selector)];
 }
 
 + (NSString *)configFilePath {
@@ -300,6 +298,7 @@ static BOOL g_isRecording;
     }
     return lpmConfigFilePath;
 }
+
 + (NSString *)configDir {
     static NSString *lpmConfigDir = nil;
     if (!lpmConfigDir) {

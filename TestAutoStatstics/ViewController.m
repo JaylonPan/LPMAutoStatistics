@@ -8,9 +8,10 @@
 
 #import "ViewController.h"
 #import "LPMAutoStatistics.h"
+#import "LPMEditStatsAlert.h"
 
 @interface ViewController ()<LPMAutoStatistics>
-
+@property (nonatomic, copy) UIColor *statusColor;
 @end
 
 @implementation ViewController
@@ -38,7 +39,7 @@
 }
 
 - (IBAction)buttonClicked:(id)sender {
-    
+
 }
 
 
@@ -51,25 +52,48 @@
      [LPMAutoStatistics prepareClassForRecord:[self class] rootClass:[ViewController class]];
 }
 
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
+    }
+}
+
+- (UIColor *)getStatusBarBackgroudColor {
+    UIColor *color = nil;
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+         color =statusBar.backgroundColor;
+    }
+    return color;
+}
+
+
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     UIAlertAction *ok = nil;
     NSString *title = nil;
     if ([LPMAutoStatistics isRecording]) {
+        
         title = @"Upload config file?";
         ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [LPMAutoStatistics endRecord];
+            [self setStatusBarBackgroundColor:self.statusColor];
             NSLog(@"%@",[LPMAutoStatistics configDictionary]);
         }];
         
     }else{
+        
         title = @"Start recording?";
         ok = [UIAlertAction actionWithTitle:@"ok" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            
+            self.statusColor = [self getStatusBarBackgroudColor];
+            [self setStatusBarBackgroundColor:[UIColor redColor]];
             [LPMAutoStatistics startRecordWithBlock:^(NSString *key, id<NSCoding> stats) {
                 NSLog(@"add config key:%@  oldStats:%@",key,stats);
-                NSString *newStats = @"我也要打点！！！！";
-                [LPMAutoStatistics configStats:newStats forKey:key];
-                NSLog(@"new stats :%@",newStats);
+                [[LPMEditStatsAlert sharedInstance]showWithText:(NSString *)stats block:^(NSString *text, BOOL isOK) {
+                    
+                    [LPMAutoStatistics configStats:text forKey:key];
+                }];
             }];
         }];
     }
