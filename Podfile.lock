@@ -1,0 +1,12 @@
+PODS:
+  - LPMHookUtils (0.0.1)
+
+DEPENDENCIES:
+  - LPMHookUtils
+
+SPEC CHECKSUMS:
+  LPMHookUtils: 4039fcfa9bb7e1e581304c57beebc4dc542df911
+
+PODFILE CHECKSUM: cd712a8bcf67d0c681f8dcbaefe594cac03af30e
+
+COCOAPODS: 1.2.0
