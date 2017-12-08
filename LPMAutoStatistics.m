@@ -122,9 +122,11 @@ static BOOL g_isRecording;
 + (void)replaceConfigWithDictionary:(NSDictionary *)dictionary {
     [self getConfigDict:^(NSMutableDictionary *config) {
         if (dictionary) {
+            [self destroyStatsList];
             [config removeAllObjects];
             [config addEntriesFromDictionary:dictionary];
             [config writeToFile:[self configFilePath] atomically:YES];
+            [self setupStatsList];
         }
     }];
 }
